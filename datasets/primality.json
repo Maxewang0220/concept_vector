@@ -1,0 +1,394 @@
+[
+  {
+    "input": "2",
+    "output": "prime"
+  },
+  {
+    "input": "3",
+    "output": "prime"
+  },
+  {
+    "input": "4",
+    "output": "composite"
+  },
+  {
+    "input": "5",
+    "output": "prime"
+  },
+  {
+    "input": "6",
+    "output": "composite"
+  },
+  {
+    "input": "7",
+    "output": "prime"
+  },
+  {
+    "input": "8",
+    "output": "composite"
+  },
+  {
+    "input": "9",
+    "output": "composite"
+  },
+  {
+    "input": "10",
+    "output": "composite"
+  },
+    {
+        "input": "11",
+        "output": "prime"
+    },
+    {
+        "input": "12",
+        "output": "composite"
+    },
+    {
+        "input": "13",
+        "output": "prime"
+    },
+    {
+        "input": "14",
+        "output": "composite"
+    },
+    {
+        "input": "15",
+        "output": "composite"
+    },
+    {
+        "input": "16",
+        "output": "composite"
+    },
+    {
+        "input": "17",
+        "output": "prime"
+    },
+    {
+        "input": "18",
+        "output": "composite"
+    },
+    {
+        "input": "19",
+        "output": "prime"
+    },
+    {
+        "input": "20",
+        "output": "composite"
+    },
+    {
+        "input": "21",
+        "output": "composite"
+    },
+    {
+        "input": "22",
+        "output": "composite"
+    },
+    {
+        "input": "23",
+        "output": "prime"
+    },
+    {
+        "input": "24",
+        "output": "composite"
+    },
+    {
+        "input": "25",
+        "output": "composite"
+    },
+    {
+        "input": "26",
+        "output": "composite"
+    },
+    {
+        "input": "27",
+        "output": "composite"
+    },
+    {
+        "input": "28",
+        "output": "composite"
+    },
+    {
+        "input": "29",
+        "output": "prime"
+    },
+    {
+        "input": "30",
+        "output": "composite"
+    },
+    {
+        "input": "31",
+        "output": "prime"
+    },
+    {
+        "input": "32",
+        "output": "composite"
+    },
+    {
+        "input": "33",
+        "output": "composite"
+    },
+    {
+        "input": "34",
+        "output": "composite"
+    },
+    {
+        "input": "35",
+        "output": "composite"
+    },
+    {
+        "input": "36",
+        "output": "composite"
+    },
+    {
+        "input": "37",
+        "output": "prime"
+    },
+    {
+        "input": "38",
+        "output": "composite"
+    },
+    {
+        "input": "39",
+        "output": "composite"
+    },
+    {
+        "input": "40",
+        "output": "composite"
+    },
+    {
+        "input": "41",
+        "output": "prime"
+    },
+    {
+        "input": "42",
+        "output": "composite"
+    },
+    {
+        "input": "43",
+        "output": "prime"
+    },
+    {
+        "input": "44",
+        "output": "composite"
+    },
+    {
+        "input": "45",
+        "output": "composite"
+    },
+    {
+        "input": "46",
+        "output": "composite"
+    },
+    {
+        "input": "47",
+        "output": "prime"
+    },
+    {
+        "input": "48",
+        "output": "composite"
+    },
+    {
+        "input": "49",
+        "output": "composite"
+    },
+    {
+        "input": "50",
+        "output": "composite"
+    },
+    {
+        "input": "51",
+        "output": "composite"
+    },
+    {
+        "input": "52",
+        "output": "composite"
+    },
+    {
+        "input": "53",
+        "output": "prime"
+    },
+    {
+        "input": "54",
+        "output": "composite"
+    },
+    {
+        "input": "55",
+        "output": "composite"
+    },
+    {
+        "input": "56",
+        "output": "composite"
+    },
+    {
+        "input": "57",
+        "output": "composite"
+    },
+    {
+        "input": "58",
+        "output": "composite"
+    },
+    {
+        "input": "59",
+        "output": "prime"
+    },
+    {
+        "input": "60",
+        "output": "composite"
+    },
+    {
+        "input": "61",
+        "output": "prime"
+    },
+    {
+        "input": "62",
+        "output": "composite"
+    },
+    {
+        "input": "63",
+        "output": "composite"
+    },
+    {
+        "input": "64",
+        "output": "composite"
+    },
+    {
+        "input": "65",
+        "output": "composite"
+    },
+    {
+        "input": "66",
+        "output": "composite"
+    },
+    {
+        "input": "67",
+        "output": "prime"
+    },
+    {
+        "input": "68",
+        "output": "composite"
+    },
+    {
+        "input": "69",
+        "output": "composite"
+    },
+    {
+        "input": "70",
+        "output": "composite"
+    },
+    {
+        "input": "71",
+        "output": "prime"
+    },
+    {
+        "input": "72",
+        "output": "composite"
+    },
+    {
+        "input": "73",
+        "output": "prime"
+    },
+    {
+        "input": "74",
+        "output": "composite"
+    },
+    {
+        "input": "75",
+        "output": "composite"
+    },
+    {
+        "input": "76",
+        "output": "composite"
+    },
+    {
+        "input": "77",
+        "output": "composite"
+    },
+    {
+        "input": "78",
+        "output": "composite"
+    },
+    {
+        "input": "79",
+        "output": "prime"
+    },
+    {
+        "input": "80",
+        "output": "composite"
+    },
+    {
+        "input": "81",
+        "output": "composite"
+    },
+    {
+        "input": "82",
+        "output": "composite"
+    },
+    {
+        "input": "83",
+        "output": "prime"
+    },
+    {
+        "input": "84",
+        "output": "composite"
+    },
+    {
+        "input": "85",
+        "output": "composite"
+    },
+    {
+        "input": "86",
+        "output": "composite"
+    },
+    {
+        "input": "87",
+        "output": "composite"
+    },
+    {
+        "input": "88",
+        "output": "composite"
+    },
+    {
+        "input": "89",
+        "output": "prime"
+    },
+    {
+        "input": "90",
+        "output": "composite"
+    },
+    {
+        "input": "91",
+        "output": "composite"
+    },
+    {
+        "input": "92",
+        "output": "composite"
+    },
+    {
+        "input": "93",
+        "output": "composite"
+    },
+    {
+        "input": "94",
+        "output": "composite"
+    },
+    {
+        "input": "95",
+        "output": "composite"
+    },
+    {
+        "input": "96",
+        "output": "composite"
+    },
+    {
+        "input": "97",
+        "output": "prime"
+    },
+    {
+        "input": "98",
+        "output": "composite"
+    },
+    {
+        "input": "99",
+        "output": "composite"
+    }
+]

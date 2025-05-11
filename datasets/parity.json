@@ -1,0 +1,402 @@
+[
+  {
+    "input": "0",
+    "output": "even"
+  },
+  {
+    "input": "1",
+    "output": "odd"
+  },
+  {
+    "input": "2",
+    "output": "even"
+  },
+  {
+    "input": "3",
+    "output": "odd"
+  },
+  {
+    "input": "4",
+    "output": "even"
+  },
+  {
+    "input": "5",
+    "output": "odd"
+  },
+  {
+    "input": "6",
+    "output": "even"
+  },
+  {
+    "input": "7",
+    "output": "odd"
+  },
+  {
+    "input": "8",
+    "output": "even"
+  },
+  {
+    "input": "9",
+    "output": "odd"
+  },
+  {
+    "input": "10",
+    "output": "even"
+  },
+  {
+    "input": "11",
+    "output": "odd"
+  },
+  {
+    "input": "12",
+    "output": "even"
+  },
+  {
+    "input": "13",
+    "output": "odd"
+  },
+  {
+    "input": "14",
+    "output": "even"
+  },
+  {
+    "input": "15",
+    "output": "odd"
+  },
+  {
+    "input": "16",
+    "output": "even"
+  },
+  {
+    "input": "17",
+    "output": "odd"
+  },
+  {
+    "input": "18",
+    "output": "even"
+  },
+  {
+    "input": "19",
+    "output": "odd"
+  },
+  {
+    "input": "20",
+    "output": "even"
+  },
+  {
+    "input": "21",
+    "output": "odd"
+  },
+  {
+    "input": "22",
+    "output": "even"
+  },
+  {
+    "input": "23",
+    "output": "odd"
+  },
+  {
+    "input": "24",
+    "output": "even"
+  },
+  {
+    "input": "25",
+    "output": "odd"
+  },
+  {
+    "input": "26",
+    "output": "even"
+  },
+  {
+    "input": "27",
+    "output": "odd"
+  },
+  {
+    "input": "28",
+    "output": "even"
+  },
+  {
+    "input": "29",
+    "output": "odd"
+  },
+  {
+    "input": "30",
+    "output": "even"
+  },
+  {
+    "input": "31",
+    "output": "odd"
+  },
+  {
+    "input": "32",
+    "output": "even"
+  },
+  {
+    "input": "33",
+    "output": "odd"
+  },
+  {
+    "input": "34",
+    "output": "even"
+  },
+  {
+    "input": "35",
+    "output": "odd"
+  },
+  {
+    "input": "36",
+    "output": "even"
+  },
+  {
+    "input": "37",
+    "output": "odd"
+  },
+  {
+    "input": "38",
+    "output": "even"
+  },
+  {
+    "input": "39",
+    "output": "odd"
+  },
+  {
+    "input": "40",
+    "output": "even"
+  },
+  {
+    "input": "41",
+    "output": "odd"
+  },
+  {
+    "input": "42",
+    "output": "even"
+  },
+  {
+    "input": "43",
+    "output": "odd"
+  },
+  {
+    "input": "44",
+    "output": "even"
+  },
+  {
+    "input": "45",
+    "output": "odd"
+  },
+  {
+    "input": "46",
+    "output": "even"
+  },
+  {
+    "input": "47",
+    "output": "odd"
+  },
+  {
+    "input": "48",
+    "output": "even"
+  },
+  {
+    "input": "49",
+    "output": "odd"
+  },
+  {
+    "input": "50",
+    "output": "even"
+  },
+  {
+    "input": "51",
+    "output": "odd"
+  },
+  {
+    "input": "52",
+    "output": "even"
+  },
+  {
+    "input": "53",
+    "output": "odd"
+  },
+  {
+    "input": "54",
+    "output": "even"
+  },
+  {
+    "input": "55",
+    "output": "odd"
+  },
+  {
+    "input": "56",
+    "output": "even"
+  },
+  {
+    "input": "57",
+    "output": "odd"
+  },
+  {
+    "input": "58",
+    "output": "even"
+  },
+  {
+    "input": "59",
+    "output": "odd"
+  },
+  {
+    "input": "60",
+    "output": "even"
+  },
+  {
+    "input": "61",
+    "output": "odd"
+  },
+  {
+    "input": "62",
+    "output": "even"
+  },
+  {
+    "input": "63",
+    "output": "odd"
+  },
+  {
+    "input": "64",
+    "output": "even"
+  },
+  {
+    "input": "65",
+    "output": "odd"
+  },
+  {
+    "input": "66",
+    "output": "even"
+  },
+  {
+    "input": "67",
+    "output": "odd"
+  },
+  {
+    "input": "68",
+    "output": "even"
+  },
+  {
+    "input": "69",
+    "output": "odd"
+  },
+  {
+    "input": "70",
+    "output": "even"
+  },
+  {
+    "input": "71",
+    "output": "odd"
+  },
+  {
+    "input": "72",
+    "output": "even"
+  },
+  {
+    "input": "73",
+    "output": "odd"
+  },
+  {
+    "input": "74",
+    "output": "even"
+  },
+  {
+    "input": "75",
+    "output": "odd"
+  },
+  {
+    "input": "76",
+    "output": "even"
+  },
+  {
+    "input": "77",
+    "output": "odd"
+  },
+  {
+    "input": "78",
+    "output": "even"
+  },
+  {
+    "input": "79",
+    "output": "odd"
+  },
+  {
+    "input": "80",
+    "output": "even"
+  },
+  {
+    "input": "81",
+    "output": "odd"
+  },
+  {
+    "input": "82",
+    "output": "even"
+  },
+  {
+    "input": "83",
+    "output": "odd"
+  },
+  {
+    "input": "84",
+    "output": "even"
+  },
+  {
+    "input": "85",
+    "output": "odd"
+  },
+  {
+    "input": "86",
+    "output": "even"
+  },
+  {
+    "input": "87",
+    "output": "odd"
+  },
+  {
+    "input": "88",
+    "output": "even"
+  },
+  {
+    "input": "89",
+    "output": "odd"
+  },
+  {
+    "input": "90",
+    "output": "even"
+  },
+  {
+    "input": "91",
+    "output": "odd"
+  },
+  {
+    "input": "92",
+    "output": "even"
+  },
+  {
+    "input": "93",
+    "output": "odd"
+  },
+  {
+    "input": "94",
+    "output": "even"
+  },
+  {
+    "input": "95",
+    "output": "odd"
+  },
+  {
+    "input": "96",
+    "output": "even"
+  },
+  {
+    "input": "97",
+    "output": "odd"
+  },
+  {
+    "input": "98",
+    "output": "even"
+  },
+  {
+    "input": "99",
+    "output": "odd"
+  }
+]
