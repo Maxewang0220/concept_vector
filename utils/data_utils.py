@@ -179,9 +179,14 @@ def load_raw_dataset(dataset_name: str, dataset_config: DatasetConfig) -> datase
 
     if is_save:
         # Save the dataset to disk
-        dataset.save_to_disk(os.path.join(BASE_DIR, f"../datasets/processed/{dataset_name}_{n_shot}_{data_size}"))
+        if dataset_config.concept_prefix:
+            dataset_path = f"../datasets/processed/{dataset_name}_{n_shot}_{data_size}_c"
+        else:
+            dataset_path = f"../datasets/processed/{dataset_name}_{n_shot}_{data_size}"
+
+        dataset.save_to_disk(os.path.join(BASE_DIR, dataset_path))
         print(
-            f"Dataset saved to {os.path.join(BASE_DIR, f'../datasets/processed/{dataset_name}_{n_shot}_{data_size}')}")
+            f"Dataset saved to {os.path.join(BASE_DIR, dataset_path)}")
 
     for i in range(len(dataset)):
         print(f"{dataset[i]['prompt']}")
@@ -215,7 +220,8 @@ def load_dataset(dataset_name: str) -> datasets.Dataset:
 
 
 if __name__ == "__main__":
-    dataset_name = "present-past.json"
+    # test load raw dataset and generate processed dataset
+    dataset_name = "primality.json"
 
     dataset_config = DatasetConfig(
         n_shot=0,
@@ -235,4 +241,6 @@ if __name__ == "__main__":
 
     load_raw_dataset(dataset_name, dataset_config)
 
+    # test load processed dataset
+    # dataset_name = "present-past.json_0_50_c"
     # load_dataset(dataset_name)
