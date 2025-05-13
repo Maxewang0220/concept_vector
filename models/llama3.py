@@ -34,9 +34,9 @@ class Llama3Model:
             )
 
             self.model = AutoModelForCausalLM.from_pretrained(
-                    model_name,
-                    trust_remote_code=True,
-                    quantization_config=bnb_config
+                model_name,
+                trust_remote_code=True,
+                quantization_config=bnb_config
             ).to(device)
         else:
             self.model = AutoModelForCausalLM.from_pretrained(
@@ -51,13 +51,15 @@ class Llama3Model:
             else:
                 self.tokenizer.add_special_tokens({'pad_token': '[PAD]'})
 
-        self.model_config = {"n_heads":self.model.config.num_attention_heads,
-                      "n_layers":self.model.config.num_hidden_layers,
-                      "resid_dim":self.model.config.hidden_size,
-                      "name_or_path":self.model.config._name_or_path,
-                      "attn_hook_names":[f'model.layers.{layer}.self_attn.o_proj' for layer in range(self.model.config.num_hidden_layers)],
-                      "layer_hook_names":[f'model.layers.{layer}' for layer in range(self.model.config.num_hidden_layers)],
-                      "prepend_bos":True}
+        self.model_config = {"n_heads": self.model.config.num_attention_heads,
+                             "n_layers": self.model.config.num_hidden_layers,
+                             "hidden_size": self.model.config.hidden_size,
+                             "name_or_path": self.model.config._name_or_path,
+                             "attn_hook_names": [f'model.layers.{layer}.self_attn.o_proj' for layer in
+                                                 range(self.model.config.num_hidden_layers)],
+                             "layer_hook_names": [f'model.layers.{layer}' for layer in
+                                                  range(self.model.config.num_hidden_layers)],
+                             "prepend_bos": True}
 
         self._log_memory_usage()
 

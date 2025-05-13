@@ -10,6 +10,7 @@ class Gemma2Model:
         "google/gemma-2-9b"
         "google/gemma-2-27b"
     """
+
     def __init__(self, model_name: str, device: str = 'cuda'):
         self.model_name = model_name
         self.device = device
@@ -38,7 +39,7 @@ class Gemma2Model:
         self.model_config = {
             "n_heads": self.model.config.num_attention_heads,
             "n_layers": self.model.config.num_hidden_layers,
-            "resid_dim": self.model.config.hidden_size,
+            "hidden_size": self.model.config.hidden_size,
             "name_or_path": self.model.config._name_or_path,
             "attn_hook_names": [f'model.layers.{layer}.self_attn.o_proj' for layer in
                                 range(self.model.config.num_hidden_layers)],

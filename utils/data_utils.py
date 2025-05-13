@@ -2,8 +2,7 @@ import datasets
 import pandas
 import pandas as pd
 import os
-
-from pyarrow.dataset import dataset
+import random
 
 # input-output pairs ICL example template
 # example: Input: 2 -> Output: prime\n
@@ -11,7 +10,7 @@ ICL_EXAMPLE_TEMPLATE = """{input_prefix}{input}{separator_first}{output_prefix}{
 
 # input-output pairs prompt template
 # example: Input: number -> Output: parity\nInput: 3 -> Output: odd\nInput: 4 -> Output: \nDirectly output the answer.
-PROMPT_TEMPLATE = """{concept_prefix}{ICL_examples}{query}{instruction}"""
+PROMPT_TEMPLATE = """{ICL_examples}{query}{instruction}"""
 
 
 class DatasetConfig:
@@ -21,7 +20,8 @@ class DatasetConfig:
     - n_shot (int): The number of examples to include in the prompt.
     - data_size (int): The size of the dataset.
     - is_save (bool): Whether to save the dataset to disk.
-    - concept_prefix (str): The prefix for the concept string.
+    - concept_input (str): The concept for the input.
+    - concept_output (str): The concept for the output.
     - instruction (str): The instruction string.
     - input_prefix (str): The prefix for the input string.
     - output_prefix (str): The prefix for the output string.
@@ -29,13 +29,15 @@ class DatasetConfig:
     - separator_second (str): The separator after the output.
     """
 
-    def __init__(self, n_shot, data_size, is_save, concept_prefix, instruction, input_prefix, output_prefix,
+    def __init__(self, n_shot, data_size, is_save, concept_input, concept_output, instruction, input_prefix,
+                 output_prefix,
                  separator_first,
                  separator_second):
         self.n_shot = n_shot
         self.data_size = data_size
         self.is_save = is_save
-        self.concept_prefix = concept_prefix
+        self.concept_input = concept_input
+        self.concept_output = concept_output
         self.instruction = instruction
         self.input_prefix = input_prefix
         self.output_prefix = output_prefix
@@ -43,11 +45,11 @@ class DatasetConfig:
         self.separator_second = separator_second
 
     def __str__(self):
-        return f"n_shot:{self.n_shot}, data_size:{self.data_size}, is_save:{self.is_save}, concept_prefix: {self.concept_prefix}, instruction: {self.instruction}, input_prefix: {self.input_prefix}, output_prefix: {self.output_prefix}, separator_first: {self.separator_first}, separator_second: {self.separator_second}"
+        return f"n_shot:{self.n_shot}, data_size:{self.data_size}, is_save:{self.is_save}, concept_input: {self.concept_input}, concept_output: {self.concept_output}, instruction: {self.instruction}, input_prefix: {self.input_prefix}, output_prefix: {self.output_prefix}, separator_first: {self.separator_first}, separator_second: {self.separator_second}"
 
 
-def construct_ICL_example(input_prefix: str, input: str, output_prefix: str, output: str, separator_first: str,
-                          separator_second: str) -> str:
+def construct_ICL_example_str(input_prefix: str, input: str, output_prefix: str, output: str, separator_first: str,
+                              separator_second: str) -> str:
     """
     Construct an basic ICL example from input and output strings.
 
@@ -66,12 +68,11 @@ def construct_ICL_example(input_prefix: str, input: str, output_prefix: str, out
                                        output_prefix=output_prefix, output=output, separator_second=separator_second)
 
 
-def construct_prompt(concept_prefix: str, ICL_examples: str, query: str, instruction: str) -> str:
+def construct_prompt_str(ICL_examples: str, query: str, instruction: str) -> str:
     """
     Construct a prompt from ICL examples and an instruction.
 
     Parameters:
-    - concept_prefix (str): The prefix for the concept string.
     - ICL_examples (str): The ICL examples string.
     - query (str): The query string. Question and empty answer.
     - instruction (str): The instruction string. Limit the output content to one word or other requirements.
@@ -79,8 +80,55 @@ def construct_prompt(concept_prefix: str, ICL_examples: str, query: str, instruc
     Returns:
     - str: The constructed prompt.
     """
-    return PROMPT_TEMPLATE.format(concept_prefix=concept_prefix, ICL_examples=ICL_examples, query=query,
+    return PROMPT_TEMPLATE.format(ICL_examples=ICL_examples, query=query,
                                   instruction=instruction)
+
+
+def construct_ICL_example(input_prefix: str, input: str, output_prefix: str, output: str, separator_first: str,
+                          separator_second: str) -> list:
+    """
+    Construct an basic ICL example from input and output strings.
+
+    Parameters:
+    - input_prefix (str): The prefix for the input string.
+    - input (str): The input string.
+    - output_prefix (str): The prefix for the output string.
+    - output (str): The output string.
+    - separator_first (str): The separator between input and output.
+    - separator_second (str): The separator after the output.
+
+    Returns:
+    - list: The split to logic words ICL example list.
+    """
+    ICL_examples_list = []
+    ICL_examples_list.append(input_prefix)
+    ICL_examples_list.append(input)
+    ICL_examples_list.append(separator_first)
+    ICL_examples_list.append(output_prefix)
+    ICL_examples_list.append(output)
+    ICL_examples_list.append(separator_second)
+
+    return ICL_examples_list
+
+
+def construct_prompt(ICL_examples: list, query: list, instruction: str) -> list:
+    """
+    Construct a prompt from ICL examples and an instruction.
+
+    Parameters:
+    - ICL_examples (list): The ICL examples list.
+    - query (list): The query list. Question and empty answer.
+    - instruction (str): The instruction string. Limit the output content to one word or other requirements.
+
+    Returns:
+    - list: The split to logic words prompt list.
+    """
+    prompt_list = []
+    prompt_list.extend(ICL_examples)
+    prompt_list.extend(query)
+    prompt_list.append(instruction)
+
+    return prompt_list
 
 
 def construct_n_shot_dataset(dataset: pandas.DataFrame, dataset_config: DatasetConfig) -> datasets.Dataset:
@@ -118,9 +166,19 @@ def construct_n_shot_dataset(dataset: pandas.DataFrame, dataset_config: DatasetC
 
         # Create ICL examples
         ICL_examples = []
+
+        # If concept is not None, add the concept example
+        if dataset_config.concept_input:
+            ICL_examples.extend(
+                construct_ICL_example(input_prefix=dataset_config.input_prefix, input=dataset_config.concept_input,
+                                      separator_first=dataset_config.separator_first,
+                                      output_prefix=dataset_config.output_prefix, output=dataset_config.concept_output,
+                                      separator_second=dataset_config.separator_second))
+
+        # ICL examples
         for idx in example_indices:
-            input = dataset.iloc[idx]['input']
-            output = dataset.iloc[idx]['output']
+            input = str(dataset.iloc[idx]['input'])
+            output = str(dataset.iloc[idx]['output'])
             ICL_example = construct_ICL_example(input_prefix=dataset_config.input_prefix, input=input,
                                                 separator_first=dataset_config.separator_first,
                                                 output_prefix=dataset_config.output_prefix, output=output,
@@ -128,8 +186,8 @@ def construct_n_shot_dataset(dataset: pandas.DataFrame, dataset_config: DatasetC
             ICL_examples.append(ICL_example)
 
         # Create the query
-        query_input = dataset.iloc[query_index]['input']
-        query_output = dataset.iloc[query_index]['output']
+        query_input = str(dataset.iloc[query_index]['input'])
+        query_output = str(dataset.iloc[query_index]['output'])
         query = construct_ICL_example(input_prefix=dataset_config.input_prefix, input=query_input,
                                       separator_first=dataset_config.separator_first,
                                       output_prefix=dataset_config.output_prefix, output="",
@@ -137,7 +195,7 @@ def construct_n_shot_dataset(dataset: pandas.DataFrame, dataset_config: DatasetC
 
         # Construct the prompt
         instruction = dataset_config.instruction
-        prompt = construct_prompt(concept_prefix=dataset_config.concept_prefix, ICL_examples="".join(ICL_examples),
+        prompt = construct_prompt(ICL_examples=ICL_examples,
                                   query=query, instruction=instruction)
         answer = query_output
 
@@ -179,7 +237,7 @@ def load_raw_dataset(dataset_name: str, dataset_config: DatasetConfig) -> datase
 
     if is_save:
         # Save the dataset to disk
-        if dataset_config.concept_prefix:
+        if dataset_config.concept_input:
             dataset_path = f"../datasets/processed/{dataset_name}_{n_shot}_{data_size}_c"
         else:
             dataset_path = f"../datasets/processed/{dataset_name}_{n_shot}_{data_size}"
@@ -221,26 +279,26 @@ def load_dataset(dataset_name: str) -> datasets.Dataset:
 
 if __name__ == "__main__":
     # test load raw dataset and generate processed dataset
-    dataset_name = "primality.json"
-
-    dataset_config = DatasetConfig(
-        n_shot=0,
-        data_size=50,
-        is_save=True,
-        concept_prefix="Input: present -> Output: past\n",
-        instruction="Directly output the answer.",
-        input_prefix="Input: ",
-        output_prefix="Output: ",
-        separator_first=" -> ",
-        separator_second="\n"
-    )
-
-    import random
-
-    random.seed(42)
-
-    load_raw_dataset(dataset_name, dataset_config)
+    # dataset_name = "primality.json"
+    #
+    # dataset_config = DatasetConfig(
+    #     n_shot=0,
+    #     data_size=50,
+    #     is_save=True,
+    #     concept_input="present",
+    #     concept_output="past",
+    #     instruction="Directly output the answer.",
+    #     input_prefix="Input: ",
+    #     output_prefix="Output: ",
+    #     separator_first=" -> ",
+    #     separator_second="\n"
+    # )
+    #
+    #
+    # random.seed(42)
+    #
+    # load_raw_dataset(dataset_name, dataset_config)
 
     # test load processed dataset
-    # dataset_name = "present-past.json_0_50_c"
-    # load_dataset(dataset_name)
+    dataset_name = "present-past.json_0_50_c"
+    load_dataset(dataset_name)
