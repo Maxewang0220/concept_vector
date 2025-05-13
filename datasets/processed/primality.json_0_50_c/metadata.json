@@ -1,0 +1,12 @@
+{
+    "n_shot": 0,
+    "data_size": 50,
+    "is_save": true,
+    "concept_input": "present",
+    "concept_output": "past",
+    "instruction": "Directly output the answer.",
+    "input_prefix": "Input: ",
+    "output_prefix": "Output: ",
+    "separator_first": " -> ",
+    "separator_second": "\n"
+}

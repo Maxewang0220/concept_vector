@@ -3,6 +3,7 @@ import pandas
 import pandas as pd
 import os
 import random
+import json
 
 # input-output pairs ICL example template
 # example: Input: 2 -> Output: prime\n
@@ -251,6 +252,24 @@ def load_raw_dataset(dataset_name: str, dataset_config: DatasetConfig) -> datase
         print(f"{dataset[i]['answer']}")
         print()
 
+    # Save dataset metadata to json
+    metadata = {
+        "n_shot": n_shot,
+        "data_size": data_size,
+        "is_save": is_save,
+        "concept_input": dataset_config.concept_input,
+        "concept_output": dataset_config.concept_output,
+        "instruction": dataset_config.instruction,
+        "input_prefix": dataset_config.input_prefix,
+        "output_prefix": dataset_config.output_prefix,
+        "separator_first": dataset_config.separator_first,
+        "separator_second": dataset_config.separator_second
+    }
+
+    metadata_path = os.path.join(BASE_DIR, dataset_path, "metadata.json")
+    with open(metadata_path, 'w') as f:
+        json.dump(metadata, f, indent=4)
+
     return dataset
 
 
@@ -278,7 +297,7 @@ def load_dataset(dataset_name: str) -> datasets.Dataset:
 
 
 if __name__ == "__main__":
-    # test load raw dataset and generate processed dataset
+    # # test load raw dataset and generate processed dataset
     # dataset_name = "primality.json"
     #
     # dataset_config = DatasetConfig(
@@ -293,12 +312,11 @@ if __name__ == "__main__":
     #     separator_first=" -> ",
     #     separator_second="\n"
     # )
-    #
-    #
+
     # random.seed(42)
     #
     # load_raw_dataset(dataset_name, dataset_config)
 
-    # test load processed dataset
+    # test load processed dataset and metadata
     dataset_name = "present-past.json_0_50_c"
     load_dataset(dataset_name)
