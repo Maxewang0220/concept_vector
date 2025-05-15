@@ -102,12 +102,18 @@ def construct_ICL_example(input_prefix: str, input: str, output_prefix: str, out
     - list: The split to logic words ICL example list.
     """
     ICL_examples_list = []
-    ICL_examples_list.append(input_prefix)
-    ICL_examples_list.append(input)
-    ICL_examples_list.append(separator_first)
-    ICL_examples_list.append(output_prefix)
-    ICL_examples_list.append(output)
-    ICL_examples_list.append(separator_second)
+    if input_prefix:
+        ICL_examples_list.append(input_prefix)
+    if input:
+        ICL_examples_list.append(input)
+    if separator_first:
+        ICL_examples_list.append(separator_first)
+    if output_prefix:
+        ICL_examples_list.append(output_prefix)
+    if output:
+        ICL_examples_list.append(output)
+    if separator_second:
+        ICL_examples_list.append(separator_second)
 
     return ICL_examples_list
 
@@ -252,24 +258,6 @@ def load_raw_dataset(dataset_name: str, dataset_config: DatasetConfig) -> datase
         print(f"{dataset[i]['answer']}")
         print()
 
-    # Save dataset metadata to json
-    metadata = {
-        "n_shot": n_shot,
-        "data_size": data_size,
-        "is_save": is_save,
-        "concept_input": dataset_config.concept_input,
-        "concept_output": dataset_config.concept_output,
-        "instruction": dataset_config.instruction,
-        "input_prefix": dataset_config.input_prefix,
-        "output_prefix": dataset_config.output_prefix,
-        "separator_first": dataset_config.separator_first,
-        "separator_second": dataset_config.separator_second
-    }
-
-    metadata_path = os.path.join(BASE_DIR, dataset_path, "metadata.json")
-    with open(metadata_path, 'w') as f:
-        json.dump(metadata, f, indent=4)
-
     return dataset
 
 
@@ -312,11 +300,14 @@ if __name__ == "__main__":
     #     separator_first=" -> ",
     #     separator_second="\n"
     # )
-
+    #
     # random.seed(42)
     #
     # load_raw_dataset(dataset_name, dataset_config)
 
-    # test load processed dataset and metadata
-    dataset_name = "present-past.json_0_50_c"
-    load_dataset(dataset_name)
+    # # test load processed dataset and metadata
+    dataset_name = "primality.json_0_50_c"
+    dataset = load_dataset(dataset_name)
+    labels_len = len(dataset[0]['prompt'])
+    print("dataset", dataset[0]['prompt'])
+    print(f"labels_len: {labels_len}")

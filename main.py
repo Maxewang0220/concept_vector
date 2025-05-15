@@ -1,8 +1,18 @@
+import os
 import argparse
+import torch
+from huggingface_hub import login
 from utils import model_utils, data_utils, logging_utils, seed_utils
 from utils.logging_utils import logger
 
 if __name__ == "__main__":
+    # huggingface login
+    HF_TOKEN = os.getenv("HF_TOKEN")
+    login(token=HF_TOKEN)
+
+    # set torch device
+    torch.set_default_device('cuda' if torch.cuda.is_available() else 'cpu')
+
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--model_name', type=str, required=True, help="Name of the model to load")

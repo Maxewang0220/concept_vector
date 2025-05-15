@@ -3,8 +3,11 @@
   "description": "",
   "features": {
     "prompt": {
-      "dtype": "string",
-      "_type": "Value"
+      "feature": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
     },
     "answer": {
       "dtype": "string",
