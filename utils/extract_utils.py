@@ -2,17 +2,17 @@ import torch
 from baukit import TraceDict
 
 
-def get_mean_head_activation(model, dataset):
+def get_mean_head_activation(model_wrapper, dataset):
     """
     Get the whole mean head activations for a given model and dataset.
-    :param model: the model wrapper
+    :param model_wrapper: the model wrapper
     :param tokenizer: the corresponding tokenizer
     :param dataset: untokenized dataset
-    :return: mean_activations shape (layers, heads, tokens, head_dim)
+    :return: mean_activations Shape: (layers, heads, tokens, head_dim)
     """
 
     # get model config
-    model_config = model.model_config
+    model_config = model_wrapper.model_config
 
     def split_activations_by_head(activations, model_config):
         # input shape: (batch_size, seq_len, n_heads * head_dim)
@@ -44,7 +44,7 @@ def get_mean_head_activation(model, dataset):
         activations_td, word_idx = extract_attn_activations(
             tokens=dataset[n]['prompt'],
             layers=model_config['attn_hook_names'],
-            model=model
+            model_wrapper=model_wrapper
         )  # Shape: (batch_size=1, seq_len, n_heads * head_dim)
 
         # Map the tokens' activations to the corresponding word indices
@@ -84,17 +84,28 @@ def get_mean_head_activation(model, dataset):
         # the n-th example activations
         activation_storage[n] = stack_filtered
 
-    mean_activations = activation_storage.mean(dim=0)  # Shape: (n_layers, n_heads, logic_seq_len, head_dim)
+    mean_activations = activation_storage.mean(dim=0)  # Shape: (n_layers, n_heads, logic_len, head_dim)
     return mean_activations
 
 
-def extract_attn_activations(tokens, layers, model):
-    tokenizer = model.tokenizer
-    inputs = tokenizer(tokens, return_tensors='pt').to(model.device)
+def extract_attn_activations(tokens, layers, model_wrapper):
+    """
+    Extract the attention activations for a given model and dataset.
+    :param tokens:
+    :param layers:
+    :param model_wrapper:
+    :return: the input activations of the proj layers
+    """
+    tokenizer = model_wrapper.tokenizer
+    device = model_wrapper.device
+    model = model_wrapper.model
+
+    inputs = tokenizer(tokens, is_split_into_words=True, return_tensors='pt').to(device)
     word_idx = inputs.word_ids(batch_index=0)
 
     # Access Activations
+    # Keep inputs of proj layers
     with TraceDict(model, layers=layers, retain_input=True, retain_output=False) as td:
-        model(**inputs)  # batch_size x n_tokens x vocab_size, only want last token prediction
+        model(**inputs)  # Shape: (batch_size, seq_len, vocab_size)
 
     return td, word_idx

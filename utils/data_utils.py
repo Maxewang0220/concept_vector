@@ -220,7 +220,7 @@ def construct_n_shot_dataset(dataset: pandas.DataFrame, dataset_config: DatasetC
     return dataset
 
 
-def load_raw_dataset(dataset_name: str, dataset_config: DatasetConfig) -> datasets.Dataset:
+def load_raw_dataset(dataset_name: str, dataset_config: DatasetConfig, save_name: str = None) -> datasets.Dataset:
     """
     Load a raw dataset from ../datasets directory
 
@@ -242,12 +242,15 @@ def load_raw_dataset(dataset_name: str, dataset_config: DatasetConfig) -> datase
 
     dataset = construct_n_shot_dataset(raw_dataset, dataset_config=dataset_config)
 
+    # Save the dataset to disk
     if is_save:
-        # Save the dataset to disk
-        if dataset_config.concept_input:
-            dataset_path = f"../datasets/processed/{dataset_name}_{n_shot}_{data_size}_c"
+        if save_name:
+            dataset_path = f"../datasets/processed/{save_name}"
         else:
-            dataset_path = f"../datasets/processed/{dataset_name}_{n_shot}_{data_size}"
+            if dataset_config.concept_input:
+                dataset_path = f"../datasets/processed/{dataset_name}_{n_shot}_{data_size}_c"
+            else:
+                dataset_path = f"../datasets/processed/{dataset_name}_{n_shot}_{data_size}"
 
         dataset.save_to_disk(os.path.join(BASE_DIR, dataset_path))
         print(
@@ -292,8 +295,8 @@ if __name__ == "__main__":
     #     n_shot=0,
     #     data_size=50,
     #     is_save=True,
-    #     concept_input="present",
-    #     concept_output="past",
+    #     concept_input="$",
+    #     concept_output="*",
     #     instruction="Directly output the answer.",
     #     input_prefix="Input: ",
     #     output_prefix="Output: ",
@@ -303,9 +306,9 @@ if __name__ == "__main__":
     #
     # random.seed(42)
     #
-    # load_raw_dataset(dataset_name, dataset_config)
+    # load_raw_dataset(dataset_name, dataset_config, save_name="primality.json_0_empty_c")
 
-    # # test load processed dataset and metadata
+    # test load processed dataset and metadata
     dataset_name = "primality.json_0_50_c"
     dataset = load_dataset(dataset_name)
     labels_len = len(dataset[0]['prompt'])
